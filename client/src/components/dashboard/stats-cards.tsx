@@ -5,52 +5,45 @@ import { formatCurrency, formatPercentage } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface DashboardStats {
-  totalSales: string;
-  activeUsers: number;
-  totalOrders: number;
-  conversionRate: string;
-  salesChange: string;
-  usersChange: string;
-  ordersChange: string;
-  conversionChange: string;
+  totalRevenue: number;
+  totalCapital: number;
+  totalProfit: number;
+  totalTransactions: number;
+  averageTransactionValue: number;
 }
 
 const statsConfig = [
   {
-    key: 'totalSales' as const,
-    label: 'Total Sales',
+    key: 'totalRevenue' as const,
+    label: 'Total Revenue',
     icon: DollarSign,
     bgColor: 'bg-blue-50',
     iconColor: 'text-blue-600',
-    changeKey: 'salesChange' as const,
     formatter: formatCurrency,
   },
   {
-    key: 'activeUsers' as const,
-    label: 'Active Users',
-    icon: Users,
+    key: 'totalTransactions' as const,
+    label: 'Total Transactions',
+    icon: ShoppingBag,
     bgColor: 'bg-green-50',
     iconColor: 'text-green-600',
-    changeKey: 'usersChange' as const,
     formatter: (value: number) => value.toLocaleString(),
   },
   {
-    key: 'totalOrders' as const,
-    label: 'Total Orders',
-    icon: ShoppingBag,
+    key: 'totalProfit' as const,
+    label: 'Total Profit',
+    icon: TrendingUp,
     bgColor: 'bg-orange-50',
     iconColor: 'text-orange-600',
-    changeKey: 'ordersChange' as const,
-    formatter: (value: number) => value.toLocaleString(),
+    formatter: formatCurrency,
   },
   {
-    key: 'conversionRate' as const,
-    label: 'Conversion Rate',
-    icon: TrendingUp,
+    key: 'averageTransactionValue' as const,
+    label: 'Avg Transaction',
+    icon: Users,
     bgColor: 'bg-purple-50',
     iconColor: 'text-purple-600',
-    changeKey: 'conversionChange' as const,
-    formatter: (value: string) => `${value}%`,
+    formatter: formatCurrency,
   },
 ];
 
@@ -80,9 +73,6 @@ export function StatsCards() {
       {statsConfig.map((config, index) => {
         const Icon = config.icon;
         const value = stats?.[config.key];
-        const change = stats?.[config.changeKey];
-        const changeNum = change ? parseFloat(change) : 0;
-        const isPositive = changeNum >= 0;
         
         return (
           <Card key={config.key} className="hover:shadow-md transition-shadow">
@@ -96,20 +86,10 @@ export function StatsCards() {
                     <Skeleton className="h-8 w-24 mt-1" />
                   ) : (
                     <p className="text-3xl font-bold text-slate-900">
-                      {value ? config.formatter(value as any) : '0'}
+                      {value ? config.formatter(value) : '0'}
                     </p>
                   )}
-                  {isLoading ? (
-                    <Skeleton className="h-4 w-32 mt-1" />
-                  ) : change ? (
-                    <p className={`text-sm mt-1 ${
-                      isPositive ? 'text-green-600' : 'text-red-600'
-                    }`}>
-                      {formatPercentage(change)} from last month
-                    </p>
-                  ) : (
-                    <p className="text-sm text-slate-500 mt-1">No change data</p>
-                  )}
+                  <p className="text-sm text-slate-500 mt-1">Real-time data</p>
                 </div>
                 <div className={`p-3 ${config.bgColor} rounded-full`}>
                   <Icon className={`w-6 h-6 ${config.iconColor}`} />

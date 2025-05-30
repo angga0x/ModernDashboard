@@ -5,19 +5,26 @@ import { formatCurrency } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TrendingUp, Package } from "lucide-react";
 
-interface TopProduct {
-  id: number;
-  name: string;
-  category: string;
-  revenue: number;
-  units_sold: number;
-  growth_rate: number;
+interface TopProductsResponse {
+  params: {
+    limit: number;
+    orderBy: string;
+  };
+  data: {
+    productCode: string;
+    productName: string;
+    unitsSold: number;
+    totalRevenue: number;
+    totalProfit: number;
+  }[];
 }
 
 export function TopProducts() {
-  const { data: topProducts, isLoading, error } = useQuery<TopProduct[]>({
+  const { data: topProductsResponse, isLoading, error } = useQuery<TopProductsResponse>({
     queryKey: ["https://8666-180-254-78-32.ngrok-free.app/api/dashboard/top-products?limit=5&orderBy=revenue"],
   });
+
+  const topProducts = topProductsResponse?.data || [];
 
   return (
     <Card>
@@ -63,28 +70,26 @@ export function TopProducts() {
         ) : (
           <div className="space-y-3">
             {topProducts.map((product, index) => (
-              <div key={product.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+              <div key={product.productCode} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 bg-blue-100 rounded flex items-center justify-center">
                     <span className="text-sm font-bold text-blue-600">#{index + 1}</span>
                   </div>
                   <div>
-                    <p className="font-medium text-slate-900 text-sm">{product.name}</p>
-                    <p className="text-xs text-slate-500">{product.category}</p>
+                    <p className="font-medium text-slate-900 text-sm">{product.productName}</p>
+                    <p className="text-xs text-slate-500">Code: {product.productCode}</p>
                   </div>
                 </div>
                 <div className="text-right">
                   <p className="font-semibold text-slate-900 text-sm">
-                    {formatCurrency(product.revenue)}
+                    {formatCurrency(product.totalRevenue)}
                   </p>
                   <div className="flex items-center justify-end space-x-1">
-                    <span className="text-xs text-slate-500">{product.units_sold} sold</span>
-                    {product.growth_rate !== 0 && (
-                      <div className={`flex items-center ${product.growth_rate > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                        <TrendingUp className={`w-3 h-3 ${product.growth_rate < 0 ? 'rotate-180' : ''}`} />
-                        <span className="text-xs ml-1">{Math.abs(product.growth_rate).toFixed(1)}%</span>
-                      </div>
-                    )}
+                    <span className="text-xs text-slate-500">{product.unitsSold} sold</span>
+                    <div className="flex items-center text-green-600">
+                      <TrendingUp className="w-3 h-3" />
+                      <span className="text-xs ml-1">{formatCurrency(product.totalProfit)} profit</span>
+                    </div>
                   </div>
                 </div>
               </div>
