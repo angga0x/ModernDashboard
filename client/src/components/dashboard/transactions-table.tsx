@@ -8,26 +8,20 @@ import { formatCurrency, formatDate } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "wouter";
 
-interface TransactionCustomer {
-  name: string;
-  email: string;
-  avatar?: string;
-}
-
 interface Transaction {
   id: number;
-  amount: string;
+  date: string;
+  productName: string;
+  customer: string;
+  amount: number;
   status: string;
-  description?: string;
-  createdAt: string;
-  customer: TransactionCustomer | null;
 }
 
 function getStatusColor(status: string) {
   switch (status.toLowerCase()) {
-    case 'completed':
+    case 'success':
       return 'bg-green-100 text-green-800';
-    case 'pending':
+    case 'processing':
       return 'bg-yellow-100 text-yellow-800';
     case 'failed':
       return 'bg-red-100 text-red-800';
@@ -38,7 +32,7 @@ function getStatusColor(status: string) {
 
 export function TransactionsTable() {
   const { data: transactions, isLoading, error } = useQuery<Transaction[]>({
-    queryKey: ["/api/transactions"],
+    queryKey: ["/api/external/dashboard/recent-transactions"],
   });
 
   return (
@@ -70,6 +64,9 @@ export function TransactionsTable() {
                     Transaction ID
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                    Product
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
                     Customer
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
@@ -94,13 +91,10 @@ export function TransactionsTable() {
                         <Skeleton className="h-4 w-20" />
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex items-center">
-                          <Skeleton className="w-8 h-8 rounded-full mr-3" />
-                          <div>
-                            <Skeleton className="h-4 w-24 mb-1" />
-                            <Skeleton className="h-3 w-32" />
-                          </div>
-                        </div>
+                        <Skeleton className="h-4 w-32" />
+                      </td>
+                      <td className="px-6 py-4">
+                        <Skeleton className="h-4 w-24" />
                       </td>
                       <td className="px-6 py-4">
                         <Skeleton className="h-4 w-16" />
@@ -118,7 +112,7 @@ export function TransactionsTable() {
                   ))
                 ) : !transactions || transactions.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="px-6 py-8 text-center text-slate-500">
+                    <td colSpan={7} className="px-6 py-8 text-center text-slate-500">
                       <p className="text-sm">No transactions found</p>
                     </td>
                   </tr>
@@ -128,23 +122,22 @@ export function TransactionsTable() {
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">
                         #TXN-{transaction.id.toString().padStart(3, '0')}
                       </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-900">
+                        {transaction.productName}
+                      </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
                           <Avatar className="w-8 h-8 mr-3">
-                            <AvatarImage src={transaction.customer?.avatar} alt={transaction.customer?.name} />
                             <AvatarFallback>
-                              {transaction.customer?.name ? 
-                                transaction.customer.name.split(' ').map(n => n[0]).join('').toUpperCase() : 
-                                'U'
-                              }
+                              {transaction.customer.slice(-2).toUpperCase()}
                             </AvatarFallback>
                           </Avatar>
                           <div>
                             <div className="text-sm font-medium text-slate-900">
-                              {transaction.customer?.name || 'Unknown Customer'}
+                              {transaction.customer}
                             </div>
                             <div className="text-sm text-slate-500">
-                              {transaction.customer?.email || 'No email'}
+                              Mobile Customer
                             </div>
                           </div>
                         </div>
@@ -158,7 +151,7 @@ export function TransactionsTable() {
                         </Badge>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
-                        {formatDate(transaction.createdAt)}
+                        {formatDate(transaction.date)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="flex space-x-2">

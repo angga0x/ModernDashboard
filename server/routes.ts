@@ -161,6 +161,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/external/dashboard/recent-transactions", async (req, res) => {
+    try {
+      const response = await fetch("https://8666-180-254-78-32.ngrok-free.app/api/dashboard/recent-transactions", {
+        headers: {
+          'X-API-KEY': process.env.X_API_KEY || 'yourGeneratedSecureApiKey123abcXYZ'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`API responded with status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      res.json(data);
+    } catch (error) {
+      console.error('External API error:', error);
+      res.status(500).json({ message: "Failed to fetch recent transactions from external API" });
+    }
+  });
+
   // Current User (for demo purposes)
   app.get("/api/user/current", async (req, res) => {
     try {
