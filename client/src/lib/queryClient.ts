@@ -24,12 +24,38 @@ export async function apiRequest(
 }
 
 type UnauthorizedBehavior = "returnNull" | "throw";
+export async function externalApiRequest(
+  endpoint: string,
+  options: RequestInit = {}
+): Promise<Response> {
+  const config: RequestInit = {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      'X-API-KEY': import.meta.env.VITE_X_API_KEY || 'yourGeneratedSecureApiKey123abcXYZ',
+      ...options.headers,
+    },
+  };
+
+  const response = await fetch(endpoint, config);
+  await throwIfResNotOk(response);
+  return response;
+}
+
 export const getQueryFn: <T>(options: {
   on401: UnauthorizedBehavior;
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey[0] as string, {
+    const url = queryKey[0] as string;
+    
+    // Check if this is an external API call
+    if (url.startsWith('https://8666-180-254-78-32.ngrok-free.app')) {
+      const res = await externalApiRequest(url);
+      return await res.json();
+    }
+    
+    const res = await fetch(url, {
       credentials: "include",
     });
 

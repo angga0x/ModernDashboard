@@ -4,20 +4,20 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 
-interface RevenueData {
-  day: string;
-  revenue: string;
+interface SalesTrendData {
   date: string;
+  revenue: number;
+  orders: number;
 }
 
 export function RevenueChart() {
-  const { data: revenueData, isLoading, error } = useQuery<RevenueData[]>({
-    queryKey: ["/api/dashboard/revenue"],
+  const { data: salesTrendData, isLoading, error } = useQuery<SalesTrendData[]>({
+    queryKey: ["https://8666-180-254-78-32.ngrok-free.app/api/dashboard/sales-trend?granularity=daily&metric=revenue&period=last30days"],
   });
 
-  const chartData = revenueData?.map(item => ({
-    day: item.day,
-    revenue: parseFloat(item.revenue)
+  const chartData = salesTrendData?.map(item => ({
+    day: new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+    revenue: item.revenue
   })) || [];
 
   return (

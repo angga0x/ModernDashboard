@@ -56,7 +56,7 @@ const statsConfig = [
 
 export function StatsCards() {
   const { data: stats, isLoading, error } = useQuery<DashboardStats>({
-    queryKey: ["/api/dashboard/stats"],
+    queryKey: ["https://8666-180-254-78-32.ngrok-free.app/api/dashboard/stats"],
   });
 
   if (error) {

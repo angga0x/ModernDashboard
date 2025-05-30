@@ -2,7 +2,7 @@ import { Sidebar } from "@/components/layout/sidebar";
 import { TopBar } from "@/components/layout/topbar";
 import { StatsCards } from "@/components/dashboard/stats-cards";
 import { RevenueChart } from "@/components/dashboard/revenue-chart";
-import { QuickActions } from "@/components/dashboard/quick-actions";
+import { TopProducts } from "@/components/dashboard/top-products";
 import { TransactionsTable } from "@/components/dashboard/transactions-table";
 
 export default function Dashboard() {
@@ -18,10 +18,10 @@ export default function Dashboard() {
           {/* Stats Cards */}
           <StatsCards />
 
-          {/* Charts and Quick Actions Row */}
+          {/* Charts and Top Products Row */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <RevenueChart />
-            <QuickActions />
+            <TopProducts />
           </div>
 
           {/* Transactions Table */}
