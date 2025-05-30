@@ -1,8 +1,8 @@
 import { Sidebar } from "@/components/layout/sidebar";
 import { TopBar } from "@/components/layout/topbar";
-import { StatsCards } from "@/components/dashboard/stats-cards";
-import { RevenueChart } from "@/components/dashboard/revenue-chart";
-import { TopProducts } from "@/components/dashboard/top-products";
+import { StatsCards } from "@/components/dashboard/stats-cards-new";
+import { RevenueChart } from "@/components/dashboard/revenue-chart-new";
+import { TopProducts } from "@/components/dashboard/top-products-new";
 import { TransactionsTable } from "@/components/dashboard/transactions-table";
 
 export default function Dashboard() {
