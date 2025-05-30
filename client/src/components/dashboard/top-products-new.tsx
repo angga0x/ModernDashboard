@@ -21,7 +21,7 @@ interface TopProductsResponse {
 
 export function TopProducts() {
   const { data: topProductsResponse, isLoading, error } = useQuery<TopProductsResponse>({
-    queryKey: ["https://8666-180-254-78-32.ngrok-free.app/api/dashboard/top-products?limit=5&orderBy=revenue"],
+    queryKey: ["/api/external/dashboard/top-products"],
   });
 
   const products = topProductsResponse?.data || [];

@@ -89,6 +89,78 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // External API Proxy Routes
+  app.get("/api/external/dashboard/stats", async (req, res) => {
+    try {
+      const response = await fetch("https://8666-180-254-78-32.ngrok-free.app/api/dashboard/stats", {
+        headers: {
+          'X-API-KEY': process.env.X_API_KEY || 'yourGeneratedSecureApiKey123abcXYZ'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`API responded with status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      res.json(data);
+    } catch (error) {
+      console.error('External API error:', error);
+      res.status(500).json({ message: "Failed to fetch dashboard stats from external API" });
+    }
+  });
+
+  app.get("/api/external/dashboard/sales-trend", async (req, res) => {
+    try {
+      const queryParams = new URLSearchParams({
+        granularity: 'daily',
+        metric: 'revenue',
+        period: 'last30days'
+      });
+      
+      const response = await fetch(`https://8666-180-254-78-32.ngrok-free.app/api/dashboard/sales-trend?${queryParams}`, {
+        headers: {
+          'X-API-KEY': process.env.X_API_KEY || 'yourGeneratedSecureApiKey123abcXYZ'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`API responded with status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      res.json(data);
+    } catch (error) {
+      console.error('External API error:', error);
+      res.status(500).json({ message: "Failed to fetch sales trend from external API" });
+    }
+  });
+
+  app.get("/api/external/dashboard/top-products", async (req, res) => {
+    try {
+      const queryParams = new URLSearchParams({
+        limit: '5',
+        orderBy: 'revenue'
+      });
+      
+      const response = await fetch(`https://8666-180-254-78-32.ngrok-free.app/api/dashboard/top-products?${queryParams}`, {
+        headers: {
+          'X-API-KEY': process.env.X_API_KEY || 'yourGeneratedSecureApiKey123abcXYZ'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`API responded with status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      res.json(data);
+    } catch (error) {
+      console.error('External API error:', error);
+      res.status(500).json({ message: "Failed to fetch top products from external API" });
+    }
+  });
+
   // Current User (for demo purposes)
   app.get("/api/user/current", async (req, res) => {
     try {

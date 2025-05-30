@@ -22,7 +22,7 @@ interface SalesTrendResponse {
 
 export function RevenueChart() {
   const { data: salesTrendResponse, isLoading, error } = useQuery<SalesTrendResponse>({
-    queryKey: ["https://8666-180-254-78-32.ngrok-free.app/api/dashboard/sales-trend?granularity=daily&metric=revenue&period=last30days"],
+    queryKey: ["/api/external/dashboard/sales-trend"],
   });
 
   const chartData = salesTrendResponse?.data?.map(item => ({

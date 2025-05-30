@@ -32,7 +32,7 @@ export async function externalApiRequest(
     ...options,
     headers: {
       'Content-Type': 'application/json',
-      'X-API-KEY': import.meta.env.VITE_X_API_KEY || 'yourGeneratedSecureApiKey123abcXYZ',
+      'X-API-KEY': 'yourGeneratedSecureApiKey123abcXYZ',
       ...options.headers,
     },
   };
