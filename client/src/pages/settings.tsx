@@ -284,7 +284,7 @@ export default function Settings() {
                     <div className="flex items-center justify-between">
                       <div>
                         <h4 className="text-lg font-medium">Pro Plan</h4>
-                        <p className="text-sm text-muted-foreground">$29/month • Next billing: June 30, 2024</p>
+                        <p className="text-sm text-muted-foreground">Rp 425,100/month • Next billing: June 30, 2024</p>
                       </div>
                       <Badge>Active</Badge>
                     </div>
@@ -331,12 +331,12 @@ export default function Settings() {
                     <div className="space-y-2">
                       <div className="flex items-center justify-between text-sm">
                         <span>May 30, 2024</span>
-                        <span>$29.00</span>
+                        <span>Rp 425,100</span>
                         <Button variant="ghost" size="sm">Download</Button>
                       </div>
                       <div className="flex items-center justify-between text-sm">
                         <span>April 30, 2024</span>
-                        <span>$29.00</span>
+                        <span>Rp 425,100</span>
                         <Button variant="ghost" size="sm">Download</Button>
                       </div>
                     </div>

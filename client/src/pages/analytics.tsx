@@ -78,7 +78,7 @@ export default function Analytics() {
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">$24.30</div>
+                <div className="text-2xl font-bold">Rp 356,400</div>
                 <p className="text-xs text-muted-foreground">
                   <span className="text-green-600 flex items-center">
                     <TrendingUp className="h-3 w-3 mr-1" />

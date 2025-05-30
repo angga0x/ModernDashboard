@@ -158,7 +158,7 @@ export default function Payments() {
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">$124,590</div>
+                <div className="text-2xl font-bold">Rp 1,823,640,000</div>
                 <p className="text-xs text-muted-foreground flex items-center">
                   <TrendingUp className="h-3 w-3 mr-1 text-green-600" />
                   +15% from last month
@@ -343,7 +343,7 @@ export default function Payments() {
                   </div>
                   <div className="flex items-center space-x-2">
                     <span className="text-sm font-medium">67.5%</span>
-                    <Badge variant="secondary">$84,249</Badge>
+                    <Badge variant="secondary">Rp 1,232,658,550</Badge>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
@@ -353,7 +353,7 @@ export default function Payments() {
                   </div>
                   <div className="flex items-center space-x-2">
                     <span className="text-sm font-medium">23.8%</span>
-                    <Badge variant="secondary">$29,652</Badge>
+                    <Badge variant="secondary">Rp 434,020,800</Badge>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
@@ -363,7 +363,7 @@ export default function Payments() {
                   </div>
                   <div className="flex items-center space-x-2">
                     <span className="text-sm font-medium">8.7%</span>
-                    <Badge variant="secondary">$10,689</Badge>
+                    <Badge variant="secondary">Rp 156,540,450</Badge>
                   </div>
                 </div>
               </CardContent>
@@ -377,7 +377,7 @@ export default function Payments() {
               <CardContent className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-sm text-muted-foreground">Average Transaction</span>
-                  <span className="font-medium">$156.30</span>
+                  <span className="font-medium">Rp 2,287,400</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-sm text-muted-foreground">Processing Time</span>
