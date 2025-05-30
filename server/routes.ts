@@ -92,7 +92,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // External API Proxy Routes
   app.get("/api/external/dashboard/stats", async (req, res) => {
     try {
-      const response = await fetch("https://8666-180-254-78-32.ngrok-free.app/api/dashboard/stats", {
+      const response = await fetch("https://digiplus.pdwteam.com/api/dashboard/stats", {
         headers: {
           'X-API-KEY': process.env.X_API_KEY || 'yourGeneratedSecureApiKey123abcXYZ'
         }
@@ -118,7 +118,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         period: 'last30days'
       });
       
-      const response = await fetch(`https://8666-180-254-78-32.ngrok-free.app/api/dashboard/sales-trend?${queryParams}`, {
+      const response = await fetch(`https://digiplus.pdwteam.com/api/dashboard/sales-trend?${queryParams}`, {
         headers: {
           'X-API-KEY': process.env.X_API_KEY || 'yourGeneratedSecureApiKey123abcXYZ'
         }
@@ -143,7 +143,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         orderBy: 'revenue'
       });
       
-      const response = await fetch(`https://8666-180-254-78-32.ngrok-free.app/api/dashboard/top-products?${queryParams}`, {
+      const response = await fetch(`https://digiplus.pdwteam.com/api/dashboard/top-products?${queryParams}`, {
         headers: {
           'X-API-KEY': process.env.X_API_KEY || 'yourGeneratedSecureApiKey123abcXYZ'
         }
@@ -163,7 +163,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/external/dashboard/recent-transactions", async (req, res) => {
     try {
-      const response = await fetch("https://8666-180-254-78-32.ngrok-free.app/api/dashboard/recent-transactions", {
+      const response = await fetch("https://digiplus.pdwteam.com/api/dashboard/recent-transactions", {
         headers: {
           'X-API-KEY': process.env.X_API_KEY || 'yourGeneratedSecureApiKey123abcXYZ'
         }
