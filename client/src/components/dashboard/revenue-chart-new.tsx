@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
+import { formatCurrency } from "@/lib/utils";
 
 interface SalesTrendResponse {
   params: {
@@ -81,10 +82,10 @@ export function RevenueChart() {
                 axisLine={false}
                 tickLine={false}
                 tick={{ fontSize: 12, fill: '#64748b' }}
-                tickFormatter={(value) => `$${value}`}
+                tickFormatter={(value) => formatCurrency(value)}
               />
               <Tooltip 
-                formatter={(value) => [`$${value}`, 'Revenue']}
+                formatter={(value) => [formatCurrency(value), 'Revenue']}
                 labelStyle={{ color: '#334155' }}
                 contentStyle={{ 
                   backgroundColor: 'white', 
