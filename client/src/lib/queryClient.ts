@@ -50,8 +50,21 @@ export const getQueryFn: <T>(options: {
     const url = queryKey[0] as string;
     
     // Check if this is an external API call
-    if (url.startsWith('https://8666-180-254-78-32.ngrok-free.app')) {
-      const res = await externalApiRequest(url);
+    if (url.startsWith('/api/external/')) {
+      const res = await fetch(url, {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        },
+        credentials: "include",
+      });
+      
+      if (unauthorizedBehavior === "returnNull" && res.status === 401) {
+        return null;
+      }
+      
+      await throwIfResNotOk(res);
       return await res.json();
     }
     
@@ -72,9 +85,9 @@ export const queryClient = new QueryClient({
     queries: {
       queryFn: getQueryFn({ on401: "throw" }),
       refetchInterval: false,
-      refetchOnWindowFocus: false,
-      staleTime: Infinity,
-      retry: false,
+      refetchOnWindowFocus: true,
+      staleTime: 30000,
+      retry: 1,
     },
     mutations: {
       retry: false,
