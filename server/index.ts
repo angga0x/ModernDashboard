@@ -64,13 +64,19 @@ app.use((req, res, next) => {
   // Check if running in Vercel environment
   const isVercel = process.env.VERCEL === '1';
   
+  // In VPS or development, we need to listen to the server
   if (!isVercel) {
+    // For VPS, we might want to listen on all interfaces (0.0.0.0)
+    // instead of just localhost, especially if we're behind a reverse proxy
+    const host = process.env.NODE_ENV === 'production' ? "0.0.0.0" : "localhost";
+    const useReusePort = process.platform !== 'win32'; // Not supported on Windows
+    
     server.listen({
       port,
-      host: "localhost",
-      reusePort: false,
+      host,
+      reusePort: useReusePort,
     }, () => {
-      log(`serving on port ${port}`);
+      log(`serving on ${host}:${port} in ${process.env.NODE_ENV} mode`);
     });
   }
 })();
