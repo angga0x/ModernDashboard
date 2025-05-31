@@ -92,9 +92,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // External API Proxy Routes
   app.get("/api/external/dashboard/stats", async (req, res) => {
     try {
-      const response = await fetch("https://digiplus.pdwteam.com/api/dashboard/stats", {
+      // Add timestamp to prevent caching
+      const timestamp = Date.now();
+      const response = await fetch(`https://digiplus.pdwteam.com/api/dashboard/stats?_t=${timestamp}`, {
         headers: {
-          'X-API-KEY': process.env.X_API_KEY || 'yourGeneratedSecureApiKey123abcXYZ'
+          'X-API-KEY': process.env.X_API_KEY || 'yourGeneratedSecureApiKey123abcXYZ',
+          'Cache-Control': 'no-cache, no-store, must-revalidate'
         }
       });
       
@@ -115,12 +118,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const queryParams = new URLSearchParams({
         granularity: 'daily',
         metric: 'revenue',
-        period: 'last30days'
+        period: 'last30days',
+        _t: Date.now().toString() // Add timestamp
       });
       
       const response = await fetch(`https://digiplus.pdwteam.com/api/dashboard/sales-trend?${queryParams}`, {
         headers: {
-          'X-API-KEY': process.env.X_API_KEY || 'yourGeneratedSecureApiKey123abcXYZ'
+          'X-API-KEY': process.env.X_API_KEY || 'yourGeneratedSecureApiKey123abcXYZ',
+          'Cache-Control': 'no-cache, no-store, must-revalidate'
         }
       });
       
@@ -140,12 +145,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const queryParams = new URLSearchParams({
         limit: '5',
-        orderBy: 'revenue'
+        orderBy: 'revenue',
+        _t: Date.now().toString() // Add timestamp
       });
       
       const response = await fetch(`https://digiplus.pdwteam.com/api/dashboard/top-products?${queryParams}`, {
         headers: {
-          'X-API-KEY': process.env.X_API_KEY || 'yourGeneratedSecureApiKey123abcXYZ'
+          'X-API-KEY': process.env.X_API_KEY || 'yourGeneratedSecureApiKey123abcXYZ',
+          'Cache-Control': 'no-cache, no-store, must-revalidate'
         }
       });
       
@@ -163,9 +170,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/external/dashboard/recent-transactions", async (req, res) => {
     try {
-      const response = await fetch("https://digiplus.pdwteam.com/api/dashboard/recent-transactions", {
+      // Add timestamp to prevent caching
+      const timestamp = Date.now();
+      const response = await fetch(`https://digiplus.pdwteam.com/api/dashboard/recent-transactions?_t=${timestamp}`, {
         headers: {
-          'X-API-KEY': process.env.X_API_KEY || 'yourGeneratedSecureApiKey123abcXYZ'
+          'X-API-KEY': process.env.X_API_KEY || 'yourGeneratedSecureApiKey123abcXYZ',
+          'Cache-Control': 'no-cache, no-store, must-revalidate'
         }
       });
       
