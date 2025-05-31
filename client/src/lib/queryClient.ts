@@ -50,21 +50,8 @@ export const getQueryFn: <T>(options: {
     const url = queryKey[0] as string;
     
     // Check if this is an external API call
-    if (url.startsWith('/api/external/')) {
-      const res = await fetch(url, {
-        headers: {
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          'Pragma': 'no-cache',
-          'Expires': '0'
-        },
-        credentials: "include",
-      });
-      
-      if (unauthorizedBehavior === "returnNull" && res.status === 401) {
-        return null;
-      }
-      
-      await throwIfResNotOk(res);
+    if (url.startsWith('https://digiplus.pdwteam.com')) {
+      const res = await externalApiRequest(url);
       return await res.json();
     }
     
@@ -85,9 +72,9 @@ export const queryClient = new QueryClient({
     queries: {
       queryFn: getQueryFn({ on401: "throw" }),
       refetchInterval: false,
-      refetchOnWindowFocus: true,
-      staleTime: 30000,
-      retry: 1,
+      refetchOnWindowFocus: false,
+      staleTime: Infinity,
+      retry: false,
     },
     mutations: {
       retry: false,

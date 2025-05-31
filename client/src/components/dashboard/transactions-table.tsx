@@ -35,6 +35,14 @@ export function TransactionsTable() {
     queryKey: ["/api/external/dashboard/recent-transactions"],
   });
 
+  // Debug information
+  console.log('TransactionsTable - data:', transactions);
+  console.log('TransactionsTable - isLoading:', isLoading);
+  console.log('TransactionsTable - error:', error);
+
+  // Mengubah error ke tipe Error
+  const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+
   return (
     <Card>
       <CardHeader>
@@ -53,7 +61,7 @@ export function TransactionsTable() {
       <CardContent className="p-0">
         {error ? (
           <div className="p-6 text-center text-red-600">
-            <p className="text-sm">Failed to load transactions</p>
+            <p className="text-sm">Failed to load transactions: {errorMessage}</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -114,6 +122,7 @@ export function TransactionsTable() {
                   <tr>
                     <td colSpan={7} className="px-6 py-8 text-center text-slate-500">
                       <p className="text-sm">No transactions found</p>
+                      <p className="text-xs mt-2 text-slate-400">Debug: {JSON.stringify({isLoading, error: errorMessage, dataType: typeof transactions, hasData: !!transactions})}</p>
                     </td>
                   </tr>
                 ) : (
